@@ -53,3 +53,7 @@ Todos estos bloques tienen que estar escritos de manera prolija, de la forma sig
 -----------------------------------------------
 
 Es **muy importante** que los comandos _\begin\{X\}_ y _\end{X}_ estén bien escritos, sin espacios en blanco entre los caracteres. Pueden anidarse bloques, por ejemplo _enumerate_ dentro de _enumerate_, _itemize_ dentro de _enumerate_, etc.
+
+# Mejoras propuestas
+
+1. Permitir inserción de imágenes. Usar _base64_ para embeberlas en el archivo _xml_.
