@@ -1,6 +1,7 @@
 # latex2xml
 
-El objetivo de este _software_ es convertir un archivo de LaTeX que contiene preguntas de una misma categoría en un archivo Moodle-XML, para poder importar todas las preguntas de forma eficiente al Banco de Preguntas de Moodle. Es compatible con cualquier plataforma basada en Moodle, como por ejemplo PEDCO.   
+El objetivo de este _software_ es convertir un archivo de LaTeX que contiene preguntas de una misma categoría en un archivo Moodle-XML, para poder importar todas las preguntas de forma eficiente al Banco de Preguntas de Moodle. Es compatible con cualquier plataforma basada en Moodle, como por ejemplo PEDCO.  
+Los archivos de salida pueden ser editados para agregar opciones adicionales. Por ahora, este _software_ genera preguntas de tipo "ensayo" (_essay_) con un cuadro de texto (opcional) de 15 líneas y permite adjuntar archivos de imagen y documentos tipo "word", "excel", etc.  
 
 ## ¿Cómo se usa?
 (Cualquier duda, escribir a fabiangiana@gmail.com)
