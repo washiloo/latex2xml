@@ -6,6 +6,8 @@ Los archivos de salida pueden ser editados para agregar opciones adicionales. Po
 ## ¿Cómo se usa?
 (Cualquier duda, escribir a fabiangiana@gmail.com)
 
+Abrir el _notebook_ de Jupyter llamado _LaTeX_2_xml.ipynb_ y correr todas las celdas de código, modificando únicamente el contenido de la primera.
+
 ### Formato del archivo de entrada
 
 El archivo de entrada tiene que ser un documento de LaTeX con extensión _.tex_ que compile bien. Todavía no se soportan imágenes. La estructura del documento debe ser similar a la siguiente (hay 3 preguntas):
