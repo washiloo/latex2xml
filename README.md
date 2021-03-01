@@ -1,10 +1,16 @@
 # latex2xml
 
 El objetivo de este _software_ es convertir un archivo de LaTeX que contiene preguntas de una misma categoría en un archivo Moodle-XML, para poder importar todas las preguntas de forma eficiente al Banco de Preguntas de Moodle. Es compatible con cualquier plataforma basada en Moodle, como por ejemplo PEDCO.  
+<<<<<<< HEAD
 Los archivos de salida pueden ser editados para agregar opciones adicionales. Por defecto, este software genera preguntas de tipo "ensayo" (essay) con un cuadro de texto (opcional) de 15 líneas y permite adjuntar archivos de imagen y documentos tipo "word", "excel", etc. Los nombres de las preguntas se colocan automáticamente, con el formato *category_x*, donde _category_ es el nombre de la categoría y _x_ es la posición de la pregunta en el documento (empieza en 0).
+=======
+Los archivos de salida pueden ser editados para agregar opciones adicionales. Por ahora, este _software_ genera preguntas de tipo "ensayo" (_essay_) con un cuadro de texto (opcional) de 15 líneas y permite adjuntar archivos de imagen y documentos tipo "word", "excel", etc.  
+>>>>>>> f656ba80627d2c8d98679cdddfadfd2d4e57df85
 
 ## ¿Cómo se usa?
 (Cualquier duda, escribir a fabiangiana@gmail.com)
+
+Abrir el _notebook_ de Jupyter llamado _LaTeX_2_xml.ipynb_ y correr todas las celdas de código, modificando únicamente el contenido de la primera.
 
 ### Formato del archivo de entrada
 
@@ -54,3 +60,7 @@ Todos estos bloques tienen que estar escritos de manera prolija, de la forma sig
 -----------------------------------------------
 
 Es **muy importante** que los comandos _\begin\{X\}_ y _\end{X}_ estén bien escritos, sin espacios en blanco entre los caracteres. Pueden anidarse bloques, por ejemplo _enumerate_ dentro de _enumerate_, _itemize_ dentro de _enumerate_, etc.
+
+# Mejoras propuestas
+
+1. Permitir inserción de imágenes. Usar _base64_ para embeberlas en el archivo _xml_.
