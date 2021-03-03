@@ -1,10 +1,13 @@
 # latex2xml
 
 El objetivo de este _software_ es convertir un archivo de LaTeX que contiene preguntas de una misma categoría en un archivo Moodle-XML, para poder importar todas las preguntas de forma eficiente al Banco de Preguntas de Moodle. Es compatible con cualquier plataforma basada en Moodle, como por ejemplo PEDCO.  
-Los archivos de salida pueden ser editados para agregar opciones adicionales. Por defecto, este software genera preguntas de tipo "ensayo" (essay) con un cuadro de texto (opcional) de 15 líneas y permite adjuntar archivos de imagen y documentos tipo "word", "excel", etc. Los nombres de las preguntas se colocan automáticamente, con el formato *category_x*, donde _category_ es el nombre de la categoría y _x_ es la posición de la pregunta en el documento (empieza en 0).
+Los archivos de salida pueden ser editados para agregar opciones adicionales. Por defecto, este software genera preguntas de tipo "ensayo" (essay) con un cuadro de texto (opcional) de 15 líneas y permite adjuntar archivos de imagen y documentos tipo "word", "excel", etc. Los nombres de las preguntas se colocan automáticamente, con el formato *category_x*, donde _category_ es el nombre de la categoría y _x_ es la posición de la pregunta en el documento (empieza en 0).  
+Para ejecutarlo, es necesario tener instalado _Jupyter Notebook_ o _Jupyter Lab_ con _python3_. Una alternativa es ejecutar el código desde [Google Colab](https://colab.research.google.com/).
 
 ## ¿Cómo se usa?
 (Cualquier duda, escribir a fabiangiana@gmail.com)
+
+Lo más fácil es clonar este repositorio. Si no sabés cómo hacerlo, podés descargar los archivos _LaTeX_2_xml.ipynb_ y _latex2xml.py_ y colocarlos en una misma carpeta en tu PC (cualquier carpeta funcionará). Luego, tenés que correr un _server_ de Jupyter Notebook (o Jupyter Lab) desde ese directorio, abrir la _notebook_ (el archivo con extensión .ipynb), configurar y ejecutar las celdas siguiendo las instrucciones.  
 
 ### Formato del archivo de entrada
 
