@@ -59,24 +59,24 @@ Es **muy importante** que los comandos _\begin\{X\}_ y _\end{X}_ estén bien esc
 
 1. En la página principal del curso, hacer click en la rueda "menú de acciones" y seleccionar "Más...".
 
-![](https://github.com/washiloo/private/tree/main/images/latex2xml_images/Step_1.png)
+![](docs/images/Step_1.png)
 
 2. En la sección "Banco de preguntas", hacer click en "Importar".
 
-![](https://github.com/washiloo/private/tree/main/images/latex2xml_images/Step_2.png)
+![](docs/images/Step_2.png)
 
 3. En la sección "Formato de archivo", seleccionar "Formato Moodle XML".
 
-![](https://github.com/washiloo/private/tree/main/images/latex2xml_images/Step_3.png)
+![](docs/images/Step_3.png)
 
 4. Más abajo, en la sección "Importar preguntas de un archivo", hacer click en "Seleccione un archivo...".
 
-![](https://github.com/washiloo/private/tree/main/images/latex2xml_images/Step_4.png)
+![](docs/images/Step_4.png)
 
 5. Se abrirá la ventana del "Selector de archivos". Hacer click en "Subir archivo", luego "Browse" y seleccionar el archivo que se desee. Luego, hacer click en "Subir este archivo".
 
-![](https://github.com/washiloo/private/tree/main/images/latex2xml_images/Step_5.png)
+![](docs/images/Step_5.png)
 
 6. Finalmente, hacer click en "Importar". Se recibirá un mensaje indicando el éxito o fracaso de la operación de importación.
 
-![](https://github.com/washiloo/private/tree/main/images/latex2xml_images/Step_6.png)
+![](docs/images/Step_6.png)
