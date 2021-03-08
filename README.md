@@ -64,7 +64,7 @@ Hasta el momento, se admite texto en cursiva (_\textit{...}_) y negrita (_\textb
 
 ### Símbolos especiales
 
-Hasta ahora, sólo se ha resuelto el uso del "símbolo peso", que se escapa como _\$_ dentro de una ecuación.
+Hasta ahora, sólo se ha resuelto el uso del "símbolo peso", que se escapa como _\\$_ dentro de una ecuación.
 
 ## ¿Cómo se suben las preguntas a PEDCO? (es similar para otras plataformas que usen Moodle)
 
