@@ -12,11 +12,11 @@ import random
 curr_dir = os.getcwd() # Directorio actual
 
 #---------------- FUNCIONES -----------------------------
-def read_tex_q(filename): # Función que lee el archivo .tex y extrae las preguntas
+def read_tex_q(filename,latex_dir = 'questions_latex'): # Función que lee el archivo .tex y extrae las preguntas
   questions = [] # Creo una lista vacía para guardar las preguntas
     
   # Leo el archivo LaTeX
-  with open(filename,'r') as file: # Abro el archivo y lo cierro al terminar
+  with open(os.getcwd() + '/' + latex_dir + '/' + filename,'r') as file: # Abro el archivo y lo cierro al terminar
     lines = file.readlines() # Leo todas las líneas
     q_idx = find_questions(lines) # Busco los índices de bloques de pregunta
     
@@ -73,10 +73,22 @@ def format_line(line): # Convierte comandos de LaTeX en formato HTML (falta come
   return line
 
 def escape_chars(s): # Escapa los caracteres especiales de HTML
-  replace_pairs = (('<','&lt;'),('>','&gt;'),('$','$$')) # Caracteres conflictivos y su versión escapada
-
+  replace_pairs = (('<','&lt;'),('>','&gt;'),('\\$','tempPESO'),('$','$$'),('tempPESO','\$')) # Caracteres conflictivos y su versión escapada
+    
   for rp in replace_pairs: # Itero sobre todos los caracteres conflictivos
-    s = s.replace(rp[0],rp[1])
+    s = s.replace(rp[0],rp[1]) 
+  
+  while('textit{' in s): # Busco texto en italics
+    idx_0 = s.index('textit{') - 1 # Inicio del \textit{.}
+    idx_1 = idx_0 + s[idx_0:].index('}') # Fin del \textit{.}
+    
+    s = s[:idx_0] + '<em>' + s[idx_0 + 8:idx_1] + '</em>' + s[idx_1 + 1:] # Convierto el comando \textit{.} a HTML
+    
+  while('textbf{' in s): # Busco texto en boldface
+    idx_0 = s.index('textbf{') - 1 # Inicio del \textit{.}
+    idx_1 = idx_0 + s[idx_0:].index('}') # Fin del \textit{.}
+    
+    s = s[:idx_0] + '<strong>' + s[idx_0 + 8:idx_1] + '</strong>' + s[idx_1 + 1:] # Convierto el comando \textbf{.} a HTML
     
   return s
 
@@ -133,17 +145,17 @@ def prepare_quiz(questions,q_type = 'essay',q_format = 'html',q_category = 'Gene
 
   return quiz
 
-def generate_xml_q(filename,q_dir,q_type = 'essay',q_format = 'html',q_category = 'General'): # Función que genera la pregunta
+def generate_xml_q(filename,latex_dir = 'questions_latex',xml_dir = 'questions_xml',q_type = 'essay',q_format = 'html',q_category = 'General'): # Función que genera la pregunta
   #----------------- Preguntas ------------------------
-  questions = read_tex_q(filename) # Leo las preguntas
+  questions = read_tex_q(filename,latex_dir = latex_dir) # Leo las preguntas
   N = len(questions) # Número de preguntas
   quiz = prepare_quiz(questions,q_type = 'essay',q_format = 'html',q_category = q_category) # Preparo el cuestionario con todas las preguntas
   
-  if not os.path.exists(q_dir): # Si no existe el directorio, lo creo
-    os.mkdir(q_dir)
+  if not os.path.exists(xml_dir): # Si no existe el directorio, lo creo
+    os.mkdir(xml_dir)
 
   # Genero el archivo con las preguntas
-  os.chdir(curr_dir + '/' + q_dir) # Creo un contexto para guardar la pregunta y luego re
+  os.chdir(curr_dir + '/' + xml_dir) # Creo un contexto para guardar la pregunta y luego regresar al directorio posta
   with open(filename[:-3] + 'xml','w+') as q_file: # Creo un archivo, guardo todo y cierro al terminar
     q_file.write(quiz) # Copio todo el string s en el archivo
   os.chdir(curr_dir) # Vuelvo al directorio actual

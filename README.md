@@ -56,7 +56,15 @@ Todos estos bloques tienen que estar escritos de manera prolija, de la forma sig
     \end{enumerate}
 -----------------------------------------------
 
-Es **muy importante** que los comandos _\begin\{X\}_ y _\end{X}_ estén bien escritos, sin espacios en blanco entre los caracteres. Pueden anidarse bloques, por ejemplo _enumerate_ dentro de _enumerate_, _itemize_ dentro de _enumerate_, etc.
+Es **muy importante** que los comandos _\begin\{X\}_ y _\end{X}_ estén bien escritos, sin espacios en blanco entre los caracteres. Pueden anidarse bloques, por ejemplo _enumerate_ dentro de _enumerate_, _itemize_ dentro de _enumerate_, etc.  
+
+### Formato de texto permitido
+
+Hasta el momento, se admite texto en cursiva (_\textit{...}_) y negrita (_\textbf{...}_). No obstante, todavía no se pueden anidar estos comandos de formato.  
+
+### Símbolos especiales
+
+Hasta ahora, sólo se ha resuelto el uso del "símbolo peso", que se escapa como _\$_ dentro de una ecuación.
 
 ## ¿Cómo se suben las preguntas a PEDCO? (es similar para otras plataformas que usen Moodle)
 
