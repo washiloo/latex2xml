@@ -1,45 +1,45 @@
-# latex2xml
-
+# tex2xml_mood
 El objetivo de este _software_ es convertir un archivo de LaTeX que contiene preguntas de una misma categoría en un archivo Moodle-XML, para poder importar todas las preguntas de forma eficiente al Banco de Preguntas de Moodle. Es compatible con cualquier plataforma basada en Moodle, como por ejemplo PEDCO.  
-Los archivos de salida pueden ser editados para agregar opciones adicionales. Por defecto, este software genera preguntas de tipo "ensayo" (essay) con un cuadro de texto (opcional) de 15 líneas y permite adjuntar archivos de imagen y documentos tipo "word", "excel", etc. Los nombres de las preguntas se colocan automáticamente, con el formato *category_x*, donde _category_ es el nombre de la categoría y _x_ es la posición de la pregunta en el documento (empieza en 0).  
-Para ejecutarlo, es necesario tener instalado _Jupyter Notebook_ o _Jupyter Lab_ con _python3_. Una alternativa es ejecutar el código desde [Google Colab](https://colab.research.google.com/).
+
+Los archivos de salida pueden ser editados para agregar opciones adicionales. Por defecto, este software genera preguntas de tipo "ensayo" (_essay_) con un cuadro de texto (opcional) de 15 líneas y permite adjuntar archivos de imagen y documentos tipo "word", "excel", etc. Los nombres de las preguntas se colocan automáticamente, con el formato *category_x*, donde _category_ es el nombre de la categoría y _x_ es la posición de la pregunta en el documento (empieza en 0).  
 
 ## ¿Cómo se usa?
 (Cualquier duda, escribir a fabiangiana@gmail.com)
 
-Lo más fácil es clonar este repositorio usando _git_. Si no sabés cómo hacerlo, podés descargar los archivos _LaTeX_2_xml.ipynb_ y _latex2xml.py_ y colocarlos en una misma carpeta en tu PC (cualquier carpeta funcionará). Luego, tenés que correr un _server_ de Jupyter Notebook (o Jupyter Lab) desde ese directorio, abrir la _notebook_ (el archivo con extensión .ipynb), configurar y ejecutar las celdas siguiendo las instrucciones.  
+Hay dos formas de usarlo:
 
-### Configuración
+(1) Usando Jupyter Notebook (o Jupyter Lab). **Requiere instalación**.
 
-#### Un solo archivo
-El código que hace todo el trabajo se resume en dos líneas:
-```
-import latex2xml as l2x # Paquete para convertir a XML
-l2x.generate_xml_q(filename,latex_dir = 'questions_latex',xml_dir = 'questions_xml',q_type = 'essay',q_format = 'html',q_category = {}) # Convierto el archivo a XML de Moodle 
-```
-La segunda línea ejecuta el método `generate_xml_q`, que tiene los siguientes argumentos:
+(2) Usando un archivo ejecutable. **Actualmente sólo hay disponible una versión para Windows 10**.
 
-`filename` - tipo _string_: es el nombre del archivo, que debe estar contenido en el directorio `latex_dir`.  
-`latex_dir` - tipo _string_: es el directorio donde está el archivo _.tex_ que se desea convertir. Tiene que ser un subdirectorio del directorio donde está el _notebook_. Por defecto es `'questions_latex'`.  
-`xml_dir` - tipo _string_: es el directorio donde se guardará el archivo _.xml_ resultante de la conversión, y es un subdirectorio del directorio donde está el _notebook_. Por defecto es `'questions_xml'`.  
-`q_type` - tipo _string_: es el tipo de pregunta de Moodle. Por defecto es `'essay'`, y todavía no se admiten otros tipos (está pensado para el futuro).  
-`q_format` - tipo _string_: es el formato del texto de la pregunta. Por defecto es `'html'`, y todavía no se admiten otros tipos (está pensado para el futuro).  
-`q_category` - tipo _string_: es el nombre de la categoría donde se colocará la pregunta dentro del Banco de Preguntas. Por defecto es igual al nombre del archivo _.tex_, sin la extensión.  
+### Desde Jupyter
+Lo más fácil es clonar [el repositorio](https://github.com/washiloo/tex2xml_mood) usando _git_. Si no sabés cómo hacerlo, podés seguir estos pasos:
 
-Todos los argumentos, excepto `filename`, son opcionales (si no se los utiliza al llamar la función, se les asigna el valor por defecto).  
-Por ejemplo, si el archivo que se desea convertir está ubicado en `C:/Documentos/my_folder/preguntas_latex/matrices.tex` y se desea usar el nombre del archivo como nombre de la categoría, entonces el _notebook_ debe estar ubicado en `C:/Documentos/my_folder/` y se debe llamar la función de la siguiente manera:
+- Descargar los archivos _LaTeX_2_xml.ipynb_ y _tex2xml_mood.py_ y colocarlos en una misma carpeta en tu PC (cualquier carpeta funcionará). ¡Ojo! Para descargar un archivo primero hay que hacer click en el mismo, luego en `Raw` y, una vez abierto, guardarlo con la extensión que corresponda. Sí, hay que poner las extensiones manualmente...
+- Correr un _server_ de Jupyter Notebook (o Jupyter Lab) desde ese directorio, abrir la _notebook_ (el archivo con extensión .ipynb), configurar y ejecutar las celdas siguiendo las instrucciones dadas en el _notebook_.  
 
-```l2x.generate_xml_q('matrices.tex',latex_dir = 'preguntas_latex')```
+### Usando un archivo ejecutable (Windows 10)
+Por ahora, la única versión ejecutable para Windows 10 está disponible para descargar en la carpeta `standalone` del repositorio. El archivo se llama `t2x_mood_1.0_win10.exe`. Para usarlo, basta con colocarlo en una carpeta y ejecutarlo desde la línea de comandos. Para ello, pulsar la tecla de Windows y teclear `cmd`. Debe aparecer una aplicación que es como una cajita negra ("consola"). Abrirla. Luego, navegar hasta el directorio donde se encuentra el archivo ejecutable y escribir el código que corresponda según lo que se quiera hacer (los comandos entre corchetes son argumentos _opcionales_):
 
-#### Todos los archivos en un directorio
-Si se utiliza esta opción, el método que hace el trabajo se llama de la siguiente forma:
+#### **_Convertir un único archivo_**: 
 
-```generate_xml_q_folder(foldername,xml_dir = 'questions_xml')```
+`t2x_mood_1.0_win10 <filename> [category_name] [tex_dir] [xml_dir]`
 
-Acá, `foldername` es el nombre del directorio que contiene los archivos _.tex_ a convertir, y el argumento opcional `xml_dir` tiene el mismo significado y valor por defecto que en el caso de la conversión de un solo archivo. Todos los demás argumentos que se usan en la conversión de un solo archivo toman sus valores por defecto en este caso (en particular, el nombre de la categoría coincide en cada caso con el nombre del archivo).
+Acá, \<filename\> es el nombre del archivo .tex a convertir (obligatorio).
+    
+#### **_Convertir todos los archivos dentro una carpeta_**:
 
-### Formato del archivo de entrada
+`t2x_mood_1.0_win10 -a [category_name] [tex_dir] [xml_dir]`.
 
+**_Argumentos opcionales_**:  
+
+        [category_name]: nombre de la categoría en el Banco de Preguntas. Por defecto es el nombre del archivo original (sin la extensión).
+        
+        [tex_dir]: nombre de la carpeta que contiene el(los) archivo(s) .tex. Por defecto es 'questions_tex'. Esta carpeta debe estar contenida en la carpeta que tiene el archivo ejecutable.
+        
+        [xml_dir]: nombre de la carpeta donde se guardarán el(los) archivo(s) .xml. Por defecto es 'questions_xml'.
+
+## ¿Cómo debe ser el formato del archivo de entrada?
 El archivo de entrada tiene que ser un documento de LaTeX con extensión _.tex_ que compile bien. Todavía no se soportan imágenes. La estructura del documento debe ser similar a la siguiente (hay 3 preguntas):
 
 ---------------------------------------------

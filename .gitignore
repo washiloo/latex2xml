@@ -1,3 +1,8 @@
 .ipynb_checkpoints/
 __pycache__/
-questions/
+questions_tex/
+*.spec
+build/
+dist/
+tex2xml_mood
+0ld/
