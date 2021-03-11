@@ -7,7 +7,6 @@
 
 import numpy as np
 import os
-import random
 
 curr_dir = os.getcwd() # Directorio actual
 
@@ -16,7 +15,7 @@ def read_tex_q(filename,latex_dir = 'questions_latex'): # Función que lee el ar
   questions = [] # Creo una lista vacía para guardar las preguntas
     
   # Leo el archivo LaTeX
-  with open(os.getcwd() + '/' + latex_dir + '/' + filename,'r') as file: # Abro el archivo y lo cierro al terminar
+  with open(os.getcwd() + '/' + latex_dir + '/' + filename,'r',encoding = 'utf8') as file: # Abro el archivo y lo cierro al terminar
     lines = file.readlines() # Leo todas las líneas
     q_idx = find_questions(lines) # Busco los índices de bloques de pregunta
     
@@ -145,10 +144,14 @@ def prepare_quiz(questions,q_type = 'essay',q_format = 'html',q_category = 'Gene
 
   return quiz
 
-def generate_xml_q(filename,latex_dir = 'questions_latex',xml_dir = 'questions_xml',q_type = 'essay',q_format = 'html',q_category = 'General'): # Función que genera la pregunta
+def generate_xml_q(filename,latex_dir = 'questions_latex',xml_dir = 'questions_xml',q_type = 'essay',q_format = 'html',q_category = {}): # Función que genera la pregunta
   #----------------- Preguntas ------------------------
   questions = read_tex_q(filename,latex_dir = latex_dir) # Leo las preguntas
   N = len(questions) # Número de preguntas
+
+  if(q_category is generate_xml_q.__defaults__[4]): # Si no se ingresa un nombre para la categoría, pongo por defecto el nombre del archivo
+    q_category = filename[:-4] # Nombre de la categoría = nombre del archivo (sin la extensión .tex)
+
   quiz = prepare_quiz(questions,q_type = 'essay',q_format = 'html',q_category = q_category) # Preparo el cuestionario con todas las preguntas
   
   if not os.path.exists(xml_dir): # Si no existe el directorio, lo creo
@@ -161,4 +164,9 @@ def generate_xml_q(filename,latex_dir = 'questions_latex',xml_dir = 'questions_x
   os.chdir(curr_dir) # Vuelvo al directorio actual
 
   print('\n Voilà! Se generó un archivo .xml con un total de {} preguntas de tipo \"{}\" en la categoría \"{}\"'.format(len(questions),q_type,q_category))
+
+def generate_xml_q_folder(foldername,xml_dir = 'questions_xml'): # Función que convierte todos los archivos de una misma carpeta
+  for filename in os.listdir(foldername): # Busco todos los archivos en la carpeta de preguntas LaTeX
+    if(filename.endswith(".tex")): # Selecciono los archivos .tex
+      generate_xml_q(filename) # Convierto el archivo a XML de Moodle 
 #------------------------------------------------------------------------
