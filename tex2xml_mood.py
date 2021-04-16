@@ -1,4 +1,4 @@
-# Last modified: 11mar21 (FEG)
+# Last modified: 16apr21 (FEG)
 #
 # Este módulo contiene todas las funciones necesarias para convertir archivos .tex que contienen preguntas (con un formato específico) en archivos .xml compatibles con el Banco de Preguntas de la plataforma Moodle.
 #
@@ -6,6 +6,7 @@
 #
 
 import numpy as np
+import base64
 import os
 
 curr_dir = os.getcwd() # Directorio actual
@@ -51,7 +52,22 @@ def read_question(tmp_string,line): # Función que lee todas las líneas de una 
   
   return tmp_string
 
-def format_line(line): # Convierte comandos de LaTeX en formato HTML (falta comentar mejor)
+def embed_image(line,tex_dir): # Devuelve una línea de código html con una imagen embebida en base64
+  idx_0 = line.find('{') # Busco el inicio del nombre de archivo
+  idx_1 = line.find('}') # Busco el fin del nombre de archivo
+
+  filename = line[idx_0 + 1:idx_1] # Nombre del archivo
+  if('jpg' in filename): # Extensión (jpg o png)
+    ext = 'jpeg'
+  else:
+    ext = 'png'
+    
+  with open(tex_dir + '/' + filename,"rb") as image_file: # Abro el archivo de imagen
+    encoded_string = base64.b64encode(image_file.read()) # Codifico la imagen
+
+  return '<img src="data:image/' + ext + ';base64,' + encoded_string.decode("utf-8") + '" width="50%">'
+
+def format_line(line,tex_dir): # Convierte comandos de LaTeX en formato HTML (falta comentar mejor)
   if('begin{equat' in line): # Inicio de bloque 'equation'
     line = '<br> $$'
   elif('end{equat' in line): # Fin de bloque 'equation'
@@ -66,6 +82,12 @@ def format_line(line): # Convierte comandos de LaTeX en formato HTML (falta come
     line = '</ul>'
   elif('\item' in line): # Ítem de una lista (numerada o no)
     line = '</li> ' + escape_chars(line).replace('\item','<li>')
+  elif('begin{center' in line): # Inicio de bloque centrado
+    line = '<center>'
+  elif('end{center' in line): # Fin de bloque centrado
+    line = '</center>'
+  elif('includegraphics' in line): # Imagen
+    line = embed_image(line,tex_dir) # Embeber la imagen como base64
   else: # Línea común
     line = escape_chars(line)
     
@@ -105,13 +127,13 @@ def insert_header(quiz,q_category): # Agrega el header al cuestionario, incluyen
 
   return quiz
     
-def insert_question(quiz,q_lines,q_type,q_format,q_name = ''): # Agrega una pregunta al cuestionario
+def insert_question(quiz,q_lines,q_type,q_format,tex_dir,q_name = ''): # Agrega una pregunta al cuestionario
   q_text = '' # Creo un string vacío para guardar el cuerpo de la pregunta
 
   i = 0 # Índice de la línea
 
   for i in range(len(q_lines)): # Itero sobre todas las líneas de la pregunta
-    q_text = read_question(q_text,format_line(q_lines[i])) # Engordo el string
+    q_text = read_question(q_text,format_line(q_lines[i],tex_dir)) # Engordo el string
         
   quiz += """ <question type='{}'>
   <name>
@@ -133,12 +155,12 @@ def insert_question(quiz,q_lines,q_type,q_format,q_name = ''): # Agrega una preg
 
   return quiz
 
-def prepare_quiz(questions,q_type = 'essay',q_format = 'html',q_category = 'General'): # Función que prepara el cuestionario con todas las preguntas
+def prepare_quiz(questions,tex_dir,q_type = 'essay',q_format = 'html',q_category = 'General'): # Función que prepara el cuestionario con todas las preguntas
   quiz = '' # Creo un string vacío para guardar el cuerpo del "quiz" (lista de preguntas)
   quiz = insert_header(quiz,q_category) # Inserto el header del cuestionario
 
   for k in range(len(questions)): # Inserto todas las preguntas
-    quiz = insert_question(quiz,questions[k],q_type,q_format,q_category + '_' + str(k))
+    quiz = insert_question(quiz,questions[k],q_type,q_format,tex_dir,q_category + '_' + str(k))
     
   quiz += "</quiz>" # Inserto la línea de cierre del cuestionario
 
@@ -171,7 +193,7 @@ def generate_xml_q(filename,params): # Función que genera la pregunta
   if(q_category is None): # Si no se ingresa un nombre para la categoría, pongo por defecto el nombre del archivo
     q_category = filename[:-4] # Nombre de la categoría = nombre del archivo (sin la extensión .tex)
 
-  quiz = prepare_quiz(questions,q_type = q_type,q_format = q_format,q_category = q_category) # Preparo el cuestionario con todas las preguntas
+  quiz = prepare_quiz(questions,tex_dir,q_type = q_type,q_format = q_format,q_category = q_category) # Preparo el cuestionario con todas las preguntas
   
   if not os.path.exists(xml_dir): # Si no existe el directorio, lo creo
     os.mkdir(xml_dir)
