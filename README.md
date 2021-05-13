@@ -6,41 +6,35 @@ Los archivos de salida pueden ser editados para agregar opciones adicionales. Po
 ## ¿Cómo se usa?
 (Cualquier duda, escribir a fabiangiana@gmail.com)
 
-Hay dos formas de usarlo:
-
-(1) Usando Jupyter Notebook (o Jupyter Lab). **Requiere instalación**.
-
-(2) Usando un archivo ejecutable. **Actualmente sólo hay disponible una versión para Windows 10**.
-
-### Desde Jupyter
-Lo más fácil es clonar [el repositorio](https://github.com/washiloo/tex2xml_mood) usando _git_. Si no sabés cómo hacerlo, podés seguir estos pasos:
-
-- Descargar los archivos _LaTeX_2_xml.ipynb_ y _tex2xml_mood.py_ y colocarlos en una misma carpeta en tu PC (cualquier carpeta funcionará). ¡Ojo! Para descargar un archivo primero hay que hacer click en el mismo, luego en `Raw` y, una vez abierto, guardarlo con la extensión que corresponda. Sí, hay que poner las extensiones manualmente...
-- Correr un _server_ de Jupyter Notebook (o Jupyter Lab) desde ese directorio, abrir la _notebook_ (el archivo con extensión .ipynb), configurar y ejecutar las celdas siguiendo las instrucciones dadas en el _notebook_.  
-
-### Usando un archivo ejecutable (Windows 10)
-Por ahora, la única versión ejecutable para Windows 10 está disponible para descargar en la carpeta `standalone` del repositorio. El archivo se llama `t2x_mood_1.0_win10.exe`. Para usarlo, basta con colocarlo en una carpeta y ejecutarlo desde la línea de comandos. Para ello, pulsar la tecla de Windows y teclear `cmd`. Debe aparecer una aplicación que es como una cajita negra ("consola"). Abrirla. Luego, navegar hasta el directorio donde se encuentra el archivo ejecutable y escribir el código que corresponda según lo que se quiera hacer (los comandos entre corchetes son argumentos _opcionales_):
+### En Windows 10
+Por ahora, la única versión ejecutable para Windows 10 está disponible para descargar en la carpeta `standalone` del repositorio. El archivo se llama `txmood.exe`. Para usarlo, basta con colocarlo en una carpeta y ejecutarlo desde la línea de comandos. Para ello, pulsar la tecla de Windows y teclear `cmd`. Debe aparecer una aplicación que es como una cajita negra ("consola"). Abrirla. Luego, navegar hasta el directorio donde se encuentra el archivo ejecutable y escribir el código que corresponda según lo que se quiera hacer (los comandos entre corchetes son argumentos _opcionales_):
 
 #### **_Convertir un único archivo_**: 
 
-`t2x_mood_1.0_win10 <filename> [category_name] [tex_dir] [xml_dir]`
+`txmood <filename> [parent_category] [tex_dir] [xml_dir] [q_type] [q_format]`
 
 Acá, \<filename\> es el nombre del archivo .tex a convertir (obligatorio).
     
 #### **_Convertir todos los archivos dentro una carpeta_**:
 
-`t2x_mood_1.0_win10 -a [category_name] [tex_dir] [xml_dir]`.
+`txmood -a [parent_category] [tex_dir] [xml_dir] [q_type] [q_format]`.
 
 **_Argumentos opcionales_**:  
 
-        [category_name]: nombre de la categoría en el Banco de Preguntas. Por defecto es el nombre del archivo original (sin la extensión).
+        [parent_category]: nombre de la categoría progenitora en el Banco de Preguntas. Por defecto es 'top'. La categoría "hija" es el nombre del archivo original (sin la extensión).
         
         [tex_dir]: nombre de la carpeta que contiene el(los) archivo(s) .tex. Por defecto es 'questions_tex'. Esta carpeta debe estar contenida en la carpeta que tiene el archivo ejecutable.
         
         [xml_dir]: nombre de la carpeta donde se guardarán el(los) archivo(s) .xml. Por defecto es 'questions_xml'.
 
+    [q_type]: tipo de pregunta. Por defecto es 'essay'. NOTA: todavía no se han probado/implementado otros tipos.
+    [q_format]: formato del texto. Default is 'html'. NOTA: por ahora es el único que funciona.
+
+### En Linux
+Por ahora, la única versión ejecutable para Linux está disponible para descargar en la carpeta `standalone` del repositorio. El archivo se llama `txmood` (es igual al de Windows, pero sin extensión). Para usarlo, basta con colocarlo en una carpeta y ejecutarlo desde la terminal de Linux. La ejecución es idéntica a la de Windows, pero debe agregarse `./` antes del nombre del programa, es decir `./txmood` en vez de `txmood`. El resto es igual.
+
 ## ¿Cómo debe ser el formato del archivo de entrada?
-El archivo de entrada tiene que ser un documento de LaTeX con extensión _.tex_ que compile bien. Todavía no se soportan imágenes. La estructura del documento debe ser similar a la siguiente (hay 3 preguntas):
+El archivo de entrada tiene que ser un documento de LaTeX con extensión _.tex_ que compile bien. Puede también contener imágenes insertadas con el comando `\includegraphics` (las mismas serán embebidas en el archivo final .xml). La estructura del documento debe ser similar a la siguiente (hay 3 preguntas en este ejemplo):
 
 ---------------------------------------------
     ...
@@ -72,7 +66,7 @@ La parte previa a _\begin{document}_ es el preámbulo, y es irrelevante.  El blo
 
 ### Bloques permitidos
 
-Hasta el momento, sólo se permite el uso de bloques de tipo _enumerate_ (lista numerada), _itemize_ (lista con viñetas) y _equation_ (ecuación). Estas funcionalidades deben ser utilizadas en su mínima expresión, sin opciones especiales de formato.  
+Hasta el momento, sólo se permite el uso de bloques de tipo _enumerate_ (lista numerada), _itemize_ (lista con viñetas), _center_ (centrado), _includegraphics_ (imagen) y _equation_ (ecuación). Estas funcionalidades deben ser utilizadas en su mínima expresión, sin opciones especiales de formato.  
 
 Todos estos bloques tienen que estar escritos de manera prolija, de la forma siguiente (el ejemplo es un bloque _enumerate_):
 
@@ -86,6 +80,17 @@ Todos estos bloques tienen que estar escritos de manera prolija, de la forma sig
 -----------------------------------------------
 
 Es **muy importante** que los comandos _\begin\{X\}_ y _\end{X}_ estén bien escritos, sin espacios en blanco entre los caracteres. Pueden anidarse bloques, por ejemplo _enumerate_ dentro de _enumerate_, _itemize_ dentro de _enumerate_, etc.  
+
+En el caso de insertar una imagen, se recomienda el siguiente formato:
+
+-----------------------------------------------
+
+    \begin{center} 
+    \includegraphics[width= 0.8\textwidth]{image.png} 
+    \end{center}
+-----------------------------------------------
+
+Aquí, el ancho se puede ajustar como se desee. La imagen estará **embebida** en el archivo final .xml, por lo que no será necesario adjuntarla de ninguna manera durante la importación en PEDCO.
 
 ### Formato de texto permitido
 
