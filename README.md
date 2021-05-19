@@ -34,7 +34,7 @@ Acá, \<filename\> es el nombre del archivo .tex a convertir (obligatorio).
 Por ahora, la única versión ejecutable para Linux está disponible para descargar en la carpeta `standalone` del repositorio. El archivo se llama `txmood` (es igual al de Windows, pero sin extensión). Para usarlo, basta con colocarlo en una carpeta y ejecutarlo desde la terminal de Linux. La ejecución es idéntica a la de Windows, pero debe agregarse `./` antes del nombre del programa, es decir `./txmood` en vez de `txmood`. El resto es igual.
 
 ## ¿Cómo debe ser el formato del archivo de entrada?
-El archivo de entrada tiene que ser un documento de LaTeX con extensión _.tex_ que compile bien. Puede también contener imágenes insertadas con el comando `\includegraphics` (las mismas serán embebidas en el archivo final .xml). La estructura del documento debe ser similar a la siguiente (hay 3 preguntas en este ejemplo):
+NOTA: hay ejemplos en la carpeta `ejemplos` de este repositorio. El archivo de entrada tiene que ser un documento de LaTeX con extensión _.tex_ que compile bien. Puede también contener imágenes insertadas con el comando `\includegraphics` (las mismas serán embebidas en el archivo final .xml). La estructura del documento debe ser similar a la siguiente (hay 3 preguntas en este ejemplo):
 
 ---------------------------------------------
     ...
